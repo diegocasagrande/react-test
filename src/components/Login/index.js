@@ -1,6 +1,8 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 
+import './App.css';
+
 class Login extends Component {
   render() {
     return (
