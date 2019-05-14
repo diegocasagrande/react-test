@@ -4,10 +4,19 @@ import api from '../../services/api';
 
 import './styles.css';
 import logo from '../../assets/logo.jpg';
-import { setTimeout } from 'timers';
-import { async } from 'q';
 
-export default class Main extends Component {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as LoginActions from '../../store/actions/login';
+
+class Main extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+    console.log(props.payload);
+  }
+
   state = {
     user: '',
     password: '',
@@ -22,6 +31,8 @@ export default class Main extends Component {
 
     if (response.status === 200) {
       console.log('LOGOU');
+      this.props.loginSuccess('diego', '123');
+
       this.props.history.push('/app');
     } else {
       console.log('NAO LOGOU');
@@ -48,3 +59,16 @@ export default class Main extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  login: state.login.payload,
+});
+
+const mapDispatchToProps = dispatch => {
+  bindActionCreators(LoginActions, dispatch);
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Main);
